@@ -14,15 +14,15 @@ Currently peripheral drivers and related features (HAL layer) are listed below:
  - PWM;
  - Timers management;
  - UART.
- 
- The SAL provides useful functionalities as listed below:
+
+The SAL provides useful functionalities as listed below:
  - DIO (Digital Input Output) which allows I/O management including a powerful LED illumination and blinking mechanism based on timers and PWM module, 
    a buttons pressure and edges detection with configurable debounce time;
  - RTOS which is a simple scheduler with a configurable number of tasks and states (each state can run different tasks). 
-   The switch mechanism between states is performed by an easy configurable state machine.
+   The switch mechanism between states is performed by an easy configurable state machine;
  - SYS which is the entry point of the program and includes user configuration defines and exception files.
- 
- This framework is just at an early stage and it has not been deeeeeply tested, so please feel free to help and/or make it your own for improvements!
+
+This framework is just at an early stage and it has not been deeeeeply tested, so please feel free to help and/or make it your own for improvements!
  
  
 
