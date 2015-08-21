@@ -109,16 +109,15 @@ EXPORTED void APP_ADC_Init( void )
 /* Interaction task init */
 EXPORTED void APP_Interaction_Init( void )
 {
-    //RTOS_SetCallback (RTOS_CB_ID_1, RTOS_CB_TYPE_PERIODIC, 500, &toggleLED);
+    OUTCH_SetIlluminationLevel( OUTCH_KE_ILL_CH_1, OUTCH_KE_ILL_LEVEL_3 );
 
     OUTCH_SetChannelStatus( OUTCH_KE_ILL_CH_1, OUTCH_KE_CH_TURN_OFF );
-    //OUTCH_SetIlluminationLevel( OUTCH_KE_FIRST_ILL_CH, OUTCH_KE_ILL_LEVEL_5 );
 
-    OUTCH_SetChannelStatus( OUTCH_KE_ILL_CH_2, OUTCH_KE_CH_TURN_OFF );
-    //OUTCH_SetIlluminationLevel( OUTCH_KE_FIRST_ILL_CH, OUTCH_KE_ILL_LEVEL_5 );
+    OUTCH_SetChannelStatus( OUTCH_KE_ILL_CH_2, OUTCH_KE_CH_BLINKING );
 
-    OUTCH_SetChannelStatus( OUTCH_KE_ILL_CH_3, OUTCH_KE_CH_BLINKING );
-    //OUTCH_SetIlluminationLevel( OUTCH_KE_ILL_CH_1, OUTCH_KE_ILL_LEVEL_1 );
+    OUTCH_SetChannelStatus( OUTCH_KE_ILL_CH_3, OUTCH_KE_CH_TURN_OFF );
+
+    RTOS_SetCallback (RTOS_CB_ID_1, RTOS_CB_TYPE_PERIODIC, 500, &toggleLED);
 }
 
 
@@ -151,7 +150,7 @@ EXPORTED void APP_Interaction_PeriodicTask( void )
 
     if(INCH_KE_FALLING_EDGE == eTrans)
     {
-        OUTCH_SetChannelStatus(OUTCH_KE_CHANNEL_1, OUTCH_KE_CH_TOGGLE);
+        OUTCH_SetChannelStatus(OUTCH_KE_CHANNEL_1, OUTCH_KE_CH_TURN_ON);
     }
     /*
     else if(INCH_KE_RISING_EDGE == eTrans)
@@ -177,12 +176,12 @@ EXPORTED void APP_Interaction_PeriodicTask( void )
 
     if(INCH_KE_FALLING_EDGE == eTrans)
     {
-        OUTCH_SetChannelStatus(OUTCH_KE_CHANNEL_2, OUTCH_KE_CH_TOGGLE);
+        OUTCH_SetChannelStatus(OUTCH_KE_CHANNEL_1, OUTCH_KE_CH_TURN_OFF);
     }
     /*
     else if(INCH_KE_RISING_EDGE == eTrans)
     {
-        OUTCH_SetChannelStatus(OUTCH_KE_CHANNEL_2, OUTCH_KE_CH_TURN_ON);
+        OUTCH_SetChannelStatus(OUTCH_KE_CHANNEL_1, OUTCH_KE_CH_TURN_ON);
     }
     */
     else
