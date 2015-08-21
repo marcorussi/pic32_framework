@@ -32,10 +32,16 @@
 */
 
 
-//TODO: Modify the timer tick define dependency
+/* TODO:
+ - Modify the timer tick define dependency;
+ - Consider if blinking period and DC should be dinamically configured or not. They are constant now;
+ - Implement recovery in OUTCH_PeriodicTask function: Turn OFF LEDs at low voltage values.
+*/
 
 
-/* Inclusions */
+/*==============================================================================
+    Inclusions
+==============================================================================*/
 #include "../../fw_common.h"             /* general declarations */
 
 #include "../../hal/tmr.h"                /* component TMR header file */
@@ -47,9 +53,11 @@
 #include "outch.h"              /* component header file */
 
 
-// TODO: decide if blinking period and DC should be dinamically configured or not. They are constant now.
 
 
+/*==============================================================================
+    Local Definitions
+==============================================================================*/
 
 /* Blinking period counter value */
 #define US_BLINK_PERIOD_COUNTER_VALUE   ((uint16)((uint32)(OUTCH_BLINK_PERIOD_VALUE_MS * UL_1000) / TMR_UL_TICK_PERIOD_US))
@@ -72,7 +80,11 @@
 #define RECOVERY_STATUS_FLAG            (0x04)
 
 
-/* Local Macros */
+
+
+/*==============================================================================
+    Local Macros
+==============================================================================*/
 /* ---------------------- LEDs status request macros ------------------*/
 /* Macro to set ON status request */
 #define SET_TURN_ON_REQ(i)             (u8StatusReqStateChs |= (UC_1 << (i)))
@@ -114,7 +126,12 @@
 #define CHECK_RECOVERY_STATUS()        ((ui8ModuleInfoFlagsReg & RECOVERY_STATUS_FLAG) != UC_NULL)
 
 
-/* Local Variables */
+
+
+/*==============================================================================
+    Local Variables
+==============================================================================*/
+
 /* Module info flags register */
 LOCAL boolean ui8ModuleInfoFlagsReg;
 
@@ -154,6 +171,8 @@ LOCAL uint16 aui16ChannelsPWMalues[OUTCH_KE_ILL_CH_CHECK] =
 };
 
 
+
+
 /*==============================================================================
     Local Functions Prototypes
 ==============================================================================*/
@@ -167,7 +186,6 @@ LOCAL void resetChannelOutput   ( OUTCH_ke_Channels );
 /*==============================================================================
     Exported Functions
 ==============================================================================*/
-
 
 /* Init ILL module */
 EXPORTED void OUTCH_Init(void)
@@ -425,6 +443,19 @@ EXPORTED void OUTCH_PeriodicTask(void)
                      * in order to update all channels simultaneously */
                     /* reset channel output */
                     resetChannelOutput(ChIndex_u8);
+                }
+            }
+            else
+            {
+                /* update eventual illumination level */
+                if(CHECK_TURN_ON_REQ(ChIndex_u8))
+                {
+                    /* set channel output */
+                    setChannelOutput(ChIndex_u8);
+                }
+                else
+                {
+                    /* do nothing */
                 }
             }
         }
