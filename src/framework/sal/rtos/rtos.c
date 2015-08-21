@@ -32,8 +32,10 @@
 */
 
 
-// TODO: modify callbacks implementation in the same way of tasks (use flag end manage the counter in the tick int only)
-// TODO: state switch function shall return a valid value. Do not check it in the execution task function
+/* TODO:
+ - modify callbacks implementation in the same way of tasks (use flag end manage the counter in the tick int only)
+ - state switch function shall return a valid value. Do not check it in the execution task function
+*/
 
 
 /* ------------ Inclusions -------------- */
@@ -42,8 +44,6 @@
 #include "../../fw_common.h"    /* common file */
 
 #include "../../hal/tmr.h"      /* component timer header file */
-
-//#include "../../hal/port.h"
 
 #include "rtos_cfg.h"           /* component config header file */
 #include "rtos.h"               /* component header file */
@@ -60,7 +60,7 @@
 #define U32_CALLBACK_MAX_VALUE_MS       ((uint32)10000)     /* 10 s */
 
 /* First task index */
-#define U8_FIRST_TASK_INDEX_VALUE       0
+#define U8_FIRST_TASK_INDEX_VALUE       UC_NULL
 
 
 
